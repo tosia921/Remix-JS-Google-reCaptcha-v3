@@ -1,0 +1,35 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.page_wrapper {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.form_field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form_field label {
+  font-size: 1.2rem;
+}
+
+.form_field input {
+  font-size: 1rem;
+  padding: 0.5rem;
+}

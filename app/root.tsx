@@ -1,13 +1,18 @@
-import {
-  Links,
-  LiveReload,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from "@remix-run/react";
+import { LoaderFunction } from "@remix-run/node";
+import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, json, useLoaderData } from "@remix-run/react";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
+
+export const loader: LoaderFunction = async () => {
+  return json({
+    ENV: {
+      RECAPTCHA_SITE_KEY: process.env.RECAPTCHA_SITE_KEY,
+    },
+  });
+};
 
 export default function App() {
+  const { ENV } = useLoaderData<typeof loader>();
+
   return (
     <html lang="en">
       <head>
@@ -17,7 +22,17 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        <GoogleReCaptchaProvider
+          reCaptchaKey={ENV.RECAPTCHA_SITE_KEY}
+          scriptProps={{
+            async: false,
+            defer: true,
+            appendTo: "head",
+            nonce: undefined,
+          }}
+        >
+          <Outlet />
+        </GoogleReCaptchaProvider>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
